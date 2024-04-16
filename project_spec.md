@@ -71,7 +71,7 @@ Stretch Features:
 ## Wireframes
 
 <!-- Add picture of your hand sketched wireframes in this section -->
-<img src="https://i.imgur.com/FFdF75J.png" width=600>
+<img src="https://i.imgur.com/FFdF75J.png" width=500>
 
 <!---  ### [BONUS] Digital Wireframes & Mockups  --->
 
