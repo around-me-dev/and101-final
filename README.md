@@ -23,7 +23,7 @@ If we had to describe this milestone in three (3) emojis, they would be: ğŸ˜±ğŸ
 The following REQUIRED features are completed:
 
 - [X] Creation of GitHub Organization and Group Project Repo
-- [ ] Updated Course Portal group info with Group Name and App Description
+- [X] Updated Course Portal group info with Group Name and App Description
 
 The following REQUIRED files are included:
 
