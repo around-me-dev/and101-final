@@ -65,11 +65,11 @@ Streamlines the process of scheduling appointments for services. Users can brows
 3. Newspaper/news portal
    - **Description**: Creates a scrollable feed of news stories for users to stay updated with global and local news. Each story may have a picture, headline, and expanded article text to read.
    - **Category:** Entertainment / Education
-   - **Mobile:** Nobody reads newspapers anymore and 
-   - **Story:** User logs on and adds the stock within their portfolio, then they can view the portfolio as a whole and how the value of the portfolio changes over time. 
-   - **Market:** Any person who owns stocks or is interested in getting involved in the stock market.
-   - **Habit:** People will be constantly checking their phones to see the changes of their portfolio's value. They can also check up on stocks they don't own to see what they may want to purchase
-   - **Scope:** V1 allows users to add stocks they own to their portfolio V2 might let users curate lists of stocks they are interested in or categorize the ones they own. V3 could let you add friends and see how their portfolios are doing V4 adds integration to help users actually buy and sell from within the app
+   - **Mobile:** Nobody reads newspapers anymore and having the news presented in a scrollable form can provide personalized news to the user. They can follow news orgs, reporters, and journalists they like and even subscribe to certain categories and make themselves more likely to see articles about those categories.
+   - **Story:** Instead of scrolling Instagram while bored, the user pulls up the "newspaper" and reads about the current geo-political state of the world while also seeing what the financial markets are doing. Users get to learn while also enjoying an endless scroll.
+   - **Market:** Any person who wants to be more productive while on their phone and doesn't subscribe to a physical newspaper.
+   - **Habit:** People will replace the habit of scrolling TikTok with scrolling a virtual newspaper. It will make users more worldly and present instead of dopamine zombies.
+   - **Scope:** V1 allows users to subscribe to certain publications and journalists V2 will let users add friends to see what others are reading and share news stories V3 can customize your news feed to you, providing the essential breaking news and also the personalized stories
 
 
 ## Final Chosen App Idea
