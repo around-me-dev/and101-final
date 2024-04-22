@@ -12,13 +12,15 @@
          class="com.google.android.gms.maps.SupportMapFragment"
          android:layout_width="match_parent"
          android:layout_height="match_parent"
+         android:layout_marginBottom="70dp"
          app:layout_constraintBaseline_toTopOf="parent"
+         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+
          app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.0"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent"
-
-         />
-
+         app:layout_constraintVertical_bias="0.0" />
 
      <TextView
          android:id="@+id/gpsLocationText"
@@ -43,6 +45,76 @@
          app:layout_constraintEnd_toEndOf="parent"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toBottomOf="@+id/gpsLocationText" />
+
+     <LinearLayout
+         android:id="@+id/linearLayout"
+         android:layout_width="match_parent"
+         android:layout_height="70dp"
+         android:background="#C54B4B"
+         android:orientation="horizontal"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent">
+
+          <Button
+              android:id="@+id/mapButton"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:backgroundTint="#C44B4B"
+              android:insetTop="0dp"
+              android:insetBottom="0dp"
+              android:paddingLeft="0dp"
+              android:paddingTop="0dp"
+              android:paddingRight="0dp"
+              android:paddingBottom="0dp"
+              android:text="Map"
+              android:layout_weight="1"
+              app:cornerRadius="0dp"
+              app:icon="@drawable/map_button_icon"
+              app:iconGravity="textStart"
+              app:iconPadding="5dp" />
+
+          <Button
+              android:id="@+id/listButton"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:backgroundTint="#C44B4B"
+              android:insetTop="0dp"
+              android:insetBottom="0dp"
+              android:paddingLeft="0dp"
+              android:paddingTop="0dp"
+              android:paddingRight="0dp"
+              android:paddingBottom="0dp"
+              android:text="Events"
+              android:layout_weight="1"
+              app:cornerRadius="0dp"
+              app:icon="@drawable/list_button_icon"
+              app:iconGravity="textStart"
+              app:iconPadding="5dp"
+              />
+
+          <Button
+              android:id="@+id/settingsButton"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:backgroundTint="#C44B4B"
+              android:insetTop="0dp"
+              android:insetBottom="0dp"
+              android:paddingLeft="0dp"
+              android:paddingTop="0dp"
+              android:paddingRight="0dp"
+              android:paddingBottom="0dp"
+              android:text="Settings"
+              android:layout_weight="1"
+              app:cornerRadius="0dp"
+              app:icon="@drawable/settings"
+              app:iconGravity="textStart"
+              app:iconPadding="5dp" />
+
+
+
+     </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
