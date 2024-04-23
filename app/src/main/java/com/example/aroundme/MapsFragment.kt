@@ -20,6 +20,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import android.location.Geocoder
+import android.util.Log
+import java.util.Locale
 
 class MapsFragment : Fragment(), OnMapReadyCallback {
 
@@ -34,6 +37,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         tvGpsLocation = view.findViewById(R.id.gpsLocationText)
+
         setupMap()
         (activity as MainActivity).showLoader(false)
         return view
@@ -62,6 +66,10 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 location?.let {
+                    if (location != null) {
+                        val latLng = LatLng(location.latitude, location.longitude)
+                        (activity as MainActivity).setCurrentLocation(latLng)
+                    }
                     moveCameraToLocation(it)
                 }
             }
@@ -74,6 +82,23 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val userCoordinates = LatLng(location.latitude, location.longitude)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(userCoordinates, 15f))
         tvGpsLocation.text = "Lat: ${location.latitude}, Long: ${location.longitude}"
+
+        // Perform reverse geocoding to get city name
+        try {
+            val geocoder = Geocoder(requireContext(), Locale.getDefault())
+            val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            if (addresses != null) {
+                if (addresses.isNotEmpty()) {
+                    val address = addresses[0]
+                    val city = address.locality
+                    (activity as MainActivity).setCurrentCity(city)
+                    Log.d("Geocoder", "City: $city") // Log or use the city as needed
+                    tvGpsLocation.text = "Lat: ${location.latitude}, Long: ${location.longitude}, City: $city"
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Geocoder", "Error retrieving city name", e)
+        }
     }
 
     private fun enableMyLocation() {

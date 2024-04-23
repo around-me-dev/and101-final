@@ -1,24 +1,8 @@
 package com.example.aroundme
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationManager
+
 import androidx.appcompat.app.AppCompatActivity
 
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log
 import android.view.View;
@@ -27,12 +11,17 @@ import android.widget.Button;
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.example.aroundme.model.Event
+import com.google.android.gms.maps.model.LatLng
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var currentFragment: Fragment
     private lateinit var loaderContainer: FrameLayout
     private lateinit var loaderImageView: ImageView
+    private var currentLocation: LatLng? = null
+    private var currentCity : String? = null
+    private var events = mutableListOf<Event>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +40,32 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, currentFragment)
                 .commit()
         }
+    }
+
+    fun setEvents(events: List<Event>) {
+        this.events.clear()
+        this.events.addAll(events)
+        Log.d("121212MainActivity", "Events: $events")
+    }
+
+    fun getEvents(): List<Event> {
+        return events
+    }
+
+    fun setCurrentLocation(location: LatLng) {
+        currentLocation = location
+    }
+
+    fun getCurrentLocation(): LatLng? {
+        return currentLocation
+    }
+
+    fun setCurrentCity(city: String) {
+        currentCity = city
+    }
+
+    fun getCurrentCity(): String? {
+        return currentCity
     }
 
     private fun setupMenu() {
@@ -72,16 +87,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeFragment(fragment: Fragment) {
-        // Prevent replacing the same fragment type that is already displayed
         if (currentFragment::class == fragment::class) return
-
-        // Show the loader
         showLoader(true)
 
-        // Begin the transaction and replace the current fragment
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, fragment)
-            addToBackStack(null) // Add the transaction to the back stack if you want back navigation
+            addToBackStack(null) // Add the transaction to the back stack
             commit()
         }
 
@@ -109,124 +120,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-
-//
-//
-//class MainActivity : AppCompatActivity() {
-//
-////    private lateinit var map: GoogleMap
-////    private lateinit var fusedLocationClient: FusedLocationProviderClient
-////    private lateinit var tvGpsLocation: TextView
-////    private val locationPermissionCode = 2
-//
-//
-//
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_main)
-//        title = "Around Me"
-//
-//        setupMenu()
-////        setupMap()
-//
-//
-//    }
-//
-////    @SuppressLint("MissingPermission")
-////    override fun onMapReady(googleMap: GoogleMap) {
-////
-////        map = googleMap
-////        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-////            enableMyLocation()
-////        } else {
-////            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-////        }
-////
-////        googleMap.uiSettings.isZoomControlsEnabled = true
-////        getLocation()
-////    }
-////
-////
-////
-////    private fun getLocation() {
-////        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-////            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-////                // Got last known location. In some rare situations this can be null.
-////                location?.let {
-////                    moveCameraToLocation(it)
-////                }
-////            }
-////        } else {
-////            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), locationPermissionCode)
-////        }
-////    }
-////
-////    private fun moveCameraToLocation(location: Location) {
-////        val userCoordinates = LatLng(location.latitude, location.longitude)
-////        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userCoordinates, 15f))
-////        tvGpsLocation.text = "Latitude: ${location.latitude}, Longitude: ${location.longitude}"
-////    }
-////
-////    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-////        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-////        if (requestCode == locationPermissionCode) {
-////            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-////                enableMyLocation()
-////                getLocation()
-////            } else {
-////                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
-////            }
-////        }
-////    }
-////
-////    private fun enableMyLocation() {
-////        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-////            map.isMyLocationEnabled = true
-////        }
-////    }
-//
-//    private fun setupMenu() {
-//        val mapButton = findViewById<Button>(R.id.mapButton)
-//        val listButton = findViewById<Button>(R.id.listButton)
-//        val settingsButton = findViewById<Button>(R.id.settingsButton)
-//
-//        mapButton.setOnClickListener {
-//            Log.d("MainActivity", "Map button clicked")
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container, MapsFragment())
-//                .commit()
-//        }
-//
-//        listButton.setOnClickListener {
-//            Log.d("MainActivity", "List button clicked")
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container, ListFragment())
-//                .commit()
-//        }
-//
-//        settingsButton.setOnClickListener {
-//            Log.d("MainActivity", "Settings button clicked")
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.fragment_container, SettingsFragment())
-//                .commit()
-//        }
-//
-//    }
-//
-//
-////    private fun setupMap() {
-////        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-////
-//////        Get the location
-////        tvGpsLocation = findViewById(R.id.gpsLocationText2)
-////        val button = findViewById<Button>(R.id.getLocation2)
-////        button.setOnClickListener {
-////            getLocation()
-////        }
-////
-//////        Show the map
-////        val mapFragment = supportFragmentManager.findFragmentById(R.id.mapFragment) as? SupportMapFragment
-////        mapFragment?.getMapAsync(this)
-////    }
-//}
