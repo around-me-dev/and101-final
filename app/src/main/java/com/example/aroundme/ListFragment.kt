@@ -18,6 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ListFragment : Fragment() {
 
+//    (activity as MainActivity).showLoader(false) <<<----
+
 
 
 }

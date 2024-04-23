@@ -35,6 +35,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
         tvGpsLocation = view.findViewById(R.id.gpsLocationText)
         setupMap()
+        (activity as MainActivity).showLoader(false)
         return view
     }
 
@@ -72,7 +73,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     private fun moveCameraToLocation(location: Location) {
         val userCoordinates = LatLng(location.latitude, location.longitude)
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(userCoordinates, 15f))
-        tvGpsLocation.text = "Latitude: ${location.latitude}, Longitude: ${location.longitude}"
+        tvGpsLocation.text = "Lat: ${location.latitude}, Long: ${location.longitude}"
     }
 
     private fun enableMyLocation() {

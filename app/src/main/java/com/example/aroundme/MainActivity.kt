@@ -22,19 +22,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log
 import android.view.View;
+import android.view.animation.AnimationUtils
 import android.widget.Button;
+import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var currentFragment: Fragment
+    private lateinit var loaderContainer: FrameLayout
+    private lateinit var loaderImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         title = "Around Me"
 
+
         setupMenu()
+
+        loaderContainer = findViewById(R.id.layout_loader_container) // The ID of the FrameLayout in layout_loader.xml
+        loaderImageView = findViewById(R.id.loaderImageView)
 
         if (savedInstanceState == null) {
             currentFragment = MapsFragment()
@@ -63,18 +72,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun changeFragment(fragment: Fragment) {
+        // Prevent replacing the same fragment type that is already displayed
+        if (currentFragment::class == fragment::class) return
+
+        // Show the loader
+        showLoader(true)
+
+        // Begin the transaction and replace the current fragment
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, fragment)
+            addToBackStack(null) // Add the transaction to the back stack if you want back navigation
+            commit()
+        }
+
+        // Update the current fragment reference
         currentFragment = fragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)  // Add this to handle back navigation through fragments
-            .commit()
     }
+
+
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
         } else {
             super.onBackPressed()  // This will exit the app if no fragments are on the back stack
+        }
+    }
+
+    fun showLoader(show: Boolean) {
+        loaderContainer.visibility = if (show) View.VISIBLE else View.GONE
+        if (show) {
+            val rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_loader)
+            loaderImageView.startAnimation(rotation)
+        } else {
+            loaderImageView.clearAnimation()
         }
     }
 }

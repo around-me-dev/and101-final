@@ -29,7 +29,7 @@ class SettingsFragment : Fragment() {
         checkboxDarkMode.setOnCheckedChangeListener { _, isChecked ->
             Toast.makeText(context, if (isChecked) "Dark Mode Enabled" else "Dark Mode Disabled", Toast.LENGTH_SHORT).show()
         }
-
+        (activity as MainActivity).showLoader(false)
         return view
     }
 }

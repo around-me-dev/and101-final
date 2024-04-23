@@ -100,5 +100,6 @@
 
      </LinearLayout>
 
+     <include layout="@layout/layout_loader" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
