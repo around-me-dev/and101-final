@@ -84,6 +84,12 @@ process, or what you learned this unit!
 
 For Milestone 2, include **2+ Videos/GIFs** of the build process here!
 
+We first implemented the basic map view
+![map view](https://github.com/around-me-dev/and101-final/blob/app-v1-main/map-progress.gif?raw=true)
+
+We then API interaction and implemented showing a list of events
+![list view](https://github.com/around-me-dev/and101-final/blob/app-v1-main/map-and-list-progress.gif?raw=true)
+
 ## License
 
 Copyright **2024** | **Around Me Dev Team**
