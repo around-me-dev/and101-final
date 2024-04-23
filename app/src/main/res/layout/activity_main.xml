@@ -6,45 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-     <androidx.fragment.app.FragmentContainerView
-         android:id="@+id/mapFragment"
-         class="com.google.android.gms.maps.SupportMapFragment"
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"
-         android:layout_marginBottom="70dp"
-         app:layout_constraintBaseline_toTopOf="parent"
-         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.0"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toTopOf="parent"
-         app:layout_constraintVertical_bias="0.0" />
-
      <TextView
-         android:id="@+id/gpsLocationText"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="120dp"
-         android:text="Get GPS Location"
-         android:textColor="@android:color/holo_red_dark"
-         android:textSize="24sp"
+         android:id="@+id/appName"
+         android:layout_width="match_parent"
+         android:layout_height="25dp"
+         android:textAlignment="center"
+         android:gravity="center"
+         android:background="#C34B4B"
+         android:text="AroundMe"
+         android:textColor="@android:color/white"
+         android:textSize="14sp"
          android:textStyle="bold"
          app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintHorizontal_bias="0.497"
+         app:layout_constraintHorizontal_bias="0.5"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent" />
 
-     <Button
-         android:id="@+id/getLocation"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_centerInParent="true"
-         android:text="Get location"
-         app:layout_constraintEnd_toEndOf="parent"
-         app:layout_constraintStart_toStartOf="parent"
-         app:layout_constraintTop_toBottomOf="@+id/gpsLocationText" />
+     <FrameLayout
+         android:id="@+id/fragment_container"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_marginBottom="0dp"
+         android:layout_marginTop="25dp"
+         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+         app:layout_constraintTop_toTopOf="parent" />
+
 
      <LinearLayout
          android:id="@+id/linearLayout"
@@ -61,6 +47,7 @@
               android:id="@+id/mapButton"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
+              android:layout_weight="1"
               android:backgroundTint="#C44B4B"
               android:insetTop="0dp"
               android:insetBottom="0dp"
@@ -69,7 +56,6 @@
               android:paddingRight="0dp"
               android:paddingBottom="0dp"
               android:text="Map"
-              android:layout_weight="1"
               app:cornerRadius="0dp"
               app:icon="@drawable/map_button_icon"
               app:iconGravity="textStart"
@@ -79,6 +65,7 @@
               android:id="@+id/listButton"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
+              android:layout_weight="1"
               android:backgroundTint="#C44B4B"
               android:insetTop="0dp"
               android:insetBottom="0dp"
@@ -87,17 +74,16 @@
               android:paddingRight="0dp"
               android:paddingBottom="0dp"
               android:text="Events"
-              android:layout_weight="1"
               app:cornerRadius="0dp"
               app:icon="@drawable/list_button_icon"
               app:iconGravity="textStart"
-              app:iconPadding="5dp"
-              />
+              app:iconPadding="5dp" />
 
           <Button
               android:id="@+id/settingsButton"
               android:layout_width="wrap_content"
               android:layout_height="match_parent"
+              android:layout_weight="1"
               android:backgroundTint="#C44B4B"
               android:insetTop="0dp"
               android:insetBottom="0dp"
@@ -106,12 +92,10 @@
               android:paddingRight="0dp"
               android:paddingBottom="0dp"
               android:text="Settings"
-              android:layout_weight="1"
               app:cornerRadius="0dp"
               app:icon="@drawable/settings"
               app:iconGravity="textStart"
               app:iconPadding="5dp" />
-
 
 
      </LinearLayout>
