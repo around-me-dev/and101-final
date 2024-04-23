@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
+
+     <TextView
+         android:id="@+id/appName"
+         android:layout_width="match_parent"
+         android:layout_height="25dp"
+         android:textAlignment="center"
+         android:gravity="center"
+         android:background="#C34B4B"
+         android:text="AroundMe"
+         android:textColor="@android:color/white"
+         android:textSize="14sp"
+         android:textStyle="bold"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.5"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toTopOf="parent" />
+
+     <FrameLayout
+         android:id="@+id/fragment_container"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_marginBottom="0dp"
+         android:layout_marginTop="25dp"
+         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+         app:layout_constraintTop_toTopOf="parent" />
+
+
+     <LinearLayout
+         android:id="@+id/linearLayout"
+         android:layout_width="match_parent"
+         android:layout_height="70dp"
+         android:background="#C54B4B"
+         android:orientation="horizontal"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.0"
+         app:layout_constraintStart_toStartOf="parent">
+
+          <Button
+              android:id="@+id/mapButton"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:backgroundTint="#C44B4B"
+              android:insetTop="0dp"
+              android:insetBottom="0dp"
+              android:paddingLeft="0dp"
+              android:paddingTop="0dp"
+              android:paddingRight="0dp"
+              android:paddingBottom="0dp"
+              android:text="Map"
+              app:cornerRadius="0dp"
+              app:icon="@drawable/map_button_icon"
+              app:iconGravity="textStart"
+              app:iconPadding="5dp" />
+
+          <Button
+              android:id="@+id/listButton"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:backgroundTint="#C44B4B"
+              android:insetTop="0dp"
+              android:insetBottom="0dp"
+              android:paddingLeft="0dp"
+              android:paddingTop="0dp"
+              android:paddingRight="0dp"
+              android:paddingBottom="0dp"
+              android:text="Events"
+              app:cornerRadius="0dp"
+              app:icon="@drawable/list_button_icon"
+              app:iconGravity="textStart"
+              app:iconPadding="5dp" />
+
+          <Button
+              android:id="@+id/settingsButton"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              android:backgroundTint="#C44B4B"
+              android:insetTop="0dp"
+              android:insetBottom="0dp"
+              android:paddingLeft="0dp"
+              android:paddingTop="0dp"
+              android:paddingRight="0dp"
+              android:paddingBottom="0dp"
+              android:text="Settings"
+              app:cornerRadius="0dp"
+              app:icon="@drawable/settings"
+              app:iconGravity="textStart"
+              app:iconPadding="5dp" />
+
+
+     </LinearLayout>
+
+     <include layout="@layout/layout_loader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

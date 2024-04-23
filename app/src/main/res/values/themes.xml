@@ -1,0 +1,16 @@
+<resources>
+    <style name="Base.Theme.AroundMe" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/red</item>
+        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorPrimaryVariant">@color/red</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:windowBackground">@color/background_color</item> <!-- Set the background color here -->
+        <!-- ... other attributes ... -->
+    </style>
+
+
+    <style name="Theme.AroundMe" parent="Base.Theme.AroundMe">
+        <!-- Theme customizations available in newer API levels can go here -->
+    </style>
+</resources>
