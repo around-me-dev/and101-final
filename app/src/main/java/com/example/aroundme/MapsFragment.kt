@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -22,9 +21,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import android.location.Geocoder
 import android.util.Log
+import com.example.aroundme.model.Event
+import com.google.android.gms.maps.model.MarkerOptions
 import java.util.Locale
 
-class MapsFragment : Fragment(), OnMapReadyCallback {
+class MapsFragment(private var events: MutableList<Event>) : Fragment(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -40,7 +41,32 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
 
         setupMap()
         (activity as MainActivity).showLoader(false)
+        showEvents(events)
         return view
+    }
+
+    fun findLatLandFromAddress(address: String): LatLng {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addresses = geocoder.getFromLocationName(address, 1)
+        if (addresses != null) {
+            if (addresses.isNotEmpty()) {
+                val address = addresses[0]
+                return LatLng(address.latitude, address.longitude)
+            }
+        }
+        return LatLng(37.4219983, -122.084)
+    }
+    fun showEvents(events: MutableList<Event>) {
+        for (event in events) {
+            val latLng = findLatLandFromAddress(event.address[0])
+            val snippet = "${event.address}\n${event.date.start_date}\n${event.date.`when`}\n${event.description}"
+            val markerOptions = MarkerOptions()
+                .position(latLng)
+                .title(event.title)
+                .snippet(snippet)
+            val marker = map.addMarker(markerOptions)
+            marker?.tag = event
+        }
     }
 
     private fun setupMap() {
@@ -52,6 +78,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
+
         if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             enableMyLocation()
         } else {
@@ -59,6 +86,11 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
         }
         googleMap.uiSettings.isZoomControlsEnabled = true
         getLocation()
+        showEvents(events)
+
+
+        googleMap.setInfoWindowAdapter(InfoAdapter(requireContext()))
+
     }
 
 
@@ -92,7 +124,6 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
                     val address = addresses[0]
                     val city = address.locality
                     (activity as MainActivity).setCurrentCity(city)
-                    Log.d("Geocoder", "City: $city") // Log or use the city as needed
                     tvGpsLocation.text = "Lat: ${location.latitude}, Long: ${location.longitude}, City: $city"
                 }
             }

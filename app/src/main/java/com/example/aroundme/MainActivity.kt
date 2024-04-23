@@ -11,8 +11,15 @@ import android.widget.Button;
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
+import com.example.aroundme.api.EventsApiService
 import com.example.aroundme.model.Event
+import com.example.aroundme.model.EventsResponse
 import com.google.android.gms.maps.model.LatLng
+import com.google.gson.Gson
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,23 +37,62 @@ class MainActivity : AppCompatActivity() {
 
 
         setupMenu()
-
-        loaderContainer = findViewById(R.id.layout_loader_container) // The ID of the FrameLayout in layout_loader.xml
+        loaderContainer = findViewById(R.id.layout_loader_container)
         loaderImageView = findViewById(R.id.loaderImageView)
 
+        fetchEvents(currentCity ?: "Mountain View")
+
         if (savedInstanceState == null) {
-            currentFragment = MapsFragment()
+            currentFragment = MapsFragment(events)
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, currentFragment)
                 .commit()
         }
+
+
     }
 
-    fun setEvents(events: List<Event>) {
-        this.events.clear()
-        this.events.addAll(events)
-        Log.d("121212MainActivity", "Events: $events")
+    fun fetchEvents(query: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://serpapi.com/")
+            .addConverterFactory(ScalarsConverterFactory.create()) // Use ScalarsConverterFactory to handle raw JSON
+            .build()
+
+        val apiService = retrofit.create(EventsApiService::class.java)
+        apiService.getEvents(query = "Events+in+${query}").enqueue(object : Callback<String> {
+            override fun onResponse(call: retrofit2.Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    processData(response.body())
+                } else {
+                    Log.e("MainActivity", "Failed to fetch events: ${response.errorBody()?.string()}")
+                }
+            }
+
+            override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                Log.e("MainActivity", "API call failed: ${t.message}")
+            }
+        })
+        showLoader(false)
     }
+
+    private fun processData(data: String?) {
+        if (data != null) {
+            try {
+                val gson = Gson()
+                val eventsResponse = gson.fromJson(data, EventsResponse::class.java)
+                events.clear()
+                events.addAll(eventsResponse.eventsResults ?: emptyList())
+                updateListFragment()
+            } catch (e: Exception) {
+                Log.e("MainActivity", "Error parsing JSON", e)
+            }
+        }
+    }
+
+    private fun updateListFragment() {
+        (currentFragment as? ListFragment)?.setEvents(events)
+    }
+
 
     fun getEvents(): List<Event> {
         return events
@@ -56,9 +102,6 @@ class MainActivity : AppCompatActivity() {
         currentLocation = location
     }
 
-    fun getCurrentLocation(): LatLng? {
-        return currentLocation
-    }
 
     fun setCurrentCity(city: String) {
         currentCity = city
@@ -74,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         val settingsButton = findViewById<Button>(R.id.settingsButton)
 
         mapButton.setOnClickListener {
-            changeFragment(MapsFragment())
+            changeFragment(MapsFragment(events))
         }
 
         listButton.setOnClickListener {
