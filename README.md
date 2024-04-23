@@ -42,9 +42,9 @@ The following EXTRA features are implemented:
 
 Here's a video that demos all of the app's implemented features:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Demo' width='' alt='Video Demo' />
+![app demo](https://github.com/around-me-dev/and101-final/blob/app-v1-main/android%20debug-a-thon.gif?raw=true)
 
-VIDEO created with **your chosen video tool**
+VIDEO created with **Android studio**
 
 ## Notes
 
