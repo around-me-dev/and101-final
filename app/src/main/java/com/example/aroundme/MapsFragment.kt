@@ -41,7 +41,7 @@ class MapsFragment(private var events: MutableList<Event>) : Fragment(), OnMapRe
 
         setupMap()
         (activity as MainActivity).showLoader(false)
-        showEvents(events)
+//        showEvents(events)
         return view
     }
 
